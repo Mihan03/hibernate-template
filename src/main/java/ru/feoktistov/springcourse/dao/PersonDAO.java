@@ -23,32 +23,44 @@ public class PersonDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Person> index() {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
 
         // this is usually hibernate code here
-        List<Person> people = session.createQuery("select p from Person p", Person.class)
+        return session.createQuery("select p from Person p", Person.class)
                 .getResultList();
-
-//        Person person = session.get(Person.class, 1);
-        System.out.println(people);
-        return people;
     }
 
+    @Transactional(readOnly = true)
     public Person show(int id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.get(Person.class, id);
     }
 
+    @Transactional
     public void save(Person person) {
-
+        Session session = sessionFactory.getCurrentSession();
+        session.save(person);
     }
 
+    @Transactional
     public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
 
+        Person person = session.get(Person.class, id);
+        session.remove(person);
     }
 
+    @Transactional
     public void update(int id, Person updatedPerson) {
+        Session session = sessionFactory.getCurrentSession();
+        Person personToBeUpdated = session.get(Person.class, id);
 
+        personToBeUpdated.setName(updatedPerson.getName());
+        personToBeUpdated.setAge(updatedPerson.getAge());
+        personToBeUpdated.setEmail(updatedPerson.getEmail());
+        personToBeUpdated.setAddress(updatedPerson.getAddress());
     }
 }
