@@ -45,6 +45,9 @@ public class Person {
     @Column(name = "address")
     private String address;
 
+    @Enumerated(EnumType.STRING)
+    private Mood mood;
+
     public Person() {
 
     }
@@ -111,6 +114,14 @@ public class Person {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 
     @Override
