@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -44,6 +45,9 @@ public class Person {
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Your address must be in this format: Country, City, Postal code(6 digits)")
     @Column(name = "address")
     private String address;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Item> items;
 
     @Enumerated(EnumType.STRING)
     private Mood mood;
@@ -124,14 +128,26 @@ public class Person {
         this.mood = mood;
     }
 
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", createdAt=" + createdAt +
                 ", age=" + age +
                 ", address='" + address + '\'' +
+                //", items=" + items +
+                ", mood=" + mood +
                 '}';
     }
 }

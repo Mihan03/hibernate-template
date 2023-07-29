@@ -51,7 +51,7 @@ public class Item {
         return "Item{" +
                 "id=" + id +
                 ", itemName='" + itemName + '\'' +
-                ", owner=" + owner +
+                //", owner=" + owner +
                 '}';
     }
 }
