@@ -2,8 +2,10 @@ package ru.feoktistov.springcourse.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Date;
 
 
 @Entity
@@ -23,6 +25,15 @@ public class Person {
     @Email(message = "Email must be valid")
     @Column(name = "email")
     private String email;
+
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy") // дд/мм/гггг
+    private Date dateOfBirth;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     @Min(value = 18, message = "Age should not be less than 18")
     @Max(value = 150, message = "Age should not be greater than 150")
@@ -84,6 +95,22 @@ public class Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
